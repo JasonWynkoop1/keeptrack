@@ -1,4 +1,4 @@
-ob;'j gb;lghl kll;k l;'fdl 'lhl hd;'lg hkg   ;'h;dhd';h;lgfflhs'opthk]spt]k h]sxr tohj]xrt[h sxthogjohk     'p 5yjpt0khkhl;l'l;kjfalksdjfkl;jfkafd;fpaiu89geurkljf;oui0ferioew;jp8fuewfkjodjfosdjg;uhr ;lkjjl;k;lsk;dfkjlv kdtweuiotoij;;;jfjdl;fksdjlka;;jajkl;jkl;jkljk;fsadfwiofveni t[;vnf l,./import axios from 'axios';
+import axios from 'axios';
 
 // Using Nutritionix API as primary source (faster and more reliable)
 const NUTRITIONIX_API_BASE_URL = 'https://trackapi.nutritionix.com/v2';

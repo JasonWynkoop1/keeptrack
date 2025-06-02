@@ -1,12 +1,57 @@
-# React + Vite
+# KeepTrack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application built with Vite for tracking nutrition and health data.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project uses Vite for fast development and building. Here are the available scripts:
 
-## Expanding the ESLint configuration
+- `npm run dev` - Start the development server
+- `npm run build` - Build the application for production
+- `npm run preview` - Preview the production build locally
+- `npm run lint` - Run ESLint to check for code issues
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deployment to GitHub Pages
+
+This project is configured for deployment to GitHub Pages. Before deploying, make sure to:
+
+1. Update the `homepage` field in `package.json` with your GitHub username:
+   ```json
+   "homepage": "https://YOUR_GITHUB_USERNAME.github.io/keeptrack"
+   ```
+
+2. Verify that the `base` path in `vite.config.js` matches your repository name:
+   ```javascript
+   base: '/keeptrack/', // Replace with your repository name if different
+   ```
+
+3. Deploy the application by running:
+   ```bash
+   npm run deploy
+   ```
+
+4. After deployment, go to your repository settings on GitHub:
+   - Navigate to "Settings" > "Pages"
+   - Ensure the "Source" is set to "gh-pages" branch
+
+Your application will be available at the URL specified in the `homepage` field of your `package.json`.
+
+## GitHub Repository Setup
+
+If you haven't pushed this project to GitHub yet:
+
+1. Create a new repository on GitHub named `keeptrack`
+2. Connect your local repository to GitHub:
+   ```bash
+   git remote add origin https://github.com/YOUR_GITHUB_USERNAME/keeptrack.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+## Technologies Used
+
+- React
+- Vite
+- Tailwind CSS
+- Chart.js
+- Axios for API requests
