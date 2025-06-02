@@ -90,7 +90,18 @@ If you encounter a white screen or 404 errors after deployment, check the follow
    npm run deploy
    ```
 
-7. Clear your browser cache or try opening the site in an incognito/private window.
+7. If you see an error like "Failed to resolve module specifier 'react'. Relative references must start with either '/', './', or '../'", you need to update your import statements to use relative paths:
+   ```javascript
+   // Change this:
+   import React, { StrictMode } from 'react'
+   import { createRoot } from 'react-dom/client'
+
+   // To this:
+   import React, { StrictMode } from '../node_modules/react/index.js'
+   import { createRoot } from '../node_modules/react-dom/client.js'
+   ```
+
+8. Clear your browser cache or try opening the site in an incognito/private window.
 
 ## GitHub Repository Setup
 
