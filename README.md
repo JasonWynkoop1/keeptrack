@@ -48,15 +48,24 @@ If you encounter a white screen or 404 errors after deployment, check the follow
 2. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
    ```html
    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
-   <script type="module" src="./src/main.jsx"></script>
+   <script type="module" src="./src/main.js"></script>
    ```
 
-3. After making changes, redeploy by running:
+3. If you see a MIME type error like "Failed to load module script: Expected a JavaScript module script but the server responded with a MIME type of 'text/jsx'", make sure your script tag in `index.html` references a `.js` file extension instead of `.jsx`:
+   ```html
+   <!-- Change this: -->
+   <script type="module" src="./src/main.jsx"></script>
+
+   <!-- To this: -->
+   <script type="module" src="./src/main.js"></script>
+   ```
+
+4. After making changes, redeploy by running:
    ```bash
    npm run deploy
    ```
 
-4. Clear your browser cache or try opening the site in an incognito/private window.
+5. Clear your browser cache or try opening the site in an incognito/private window.
 
 ## GitHub Repository Setup
 
