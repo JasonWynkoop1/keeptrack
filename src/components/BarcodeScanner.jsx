@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useZxing } from 'react-zxing';
+import { useState } from '../../node_modules/react/index.js';
+import { useZxing } from '../../node_modules/react-zxing/dist/index.js';
 
 const BarcodeScanner = ({ onBarcodeDetected }) => {
   const [error, setError] = useState('');
-  
+
   const { ref } = useZxing({
     onDecodeResult(result) {
       const barcode = result.getText();

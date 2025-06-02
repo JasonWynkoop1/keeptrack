@@ -101,6 +101,27 @@ If you encounter a white screen or 404 errors after deployment, check the follow
    import { createRoot } from '../node_modules/react-dom/client.js'
    ```
 
+   You may need to update imports in multiple files, including:
+   - src/App.jsx
+   - src/components/BarcodeScanner.jsx
+   - src/components/MacrosDashboard.jsx
+   - src/components/ui/card.jsx
+   - src/components/ui/tabs.jsx
+   - src/components/ui/button.jsx
+   - src/lib/utils.js
+
+   For third-party libraries, the path might vary. Here are some examples:
+   ```javascript
+   // For lucide-react icons
+   import { ScanLine, Search } from '../node_modules/lucide-react/dist/esm/index.js'
+
+   // For chart.js
+   import { Chart as ChartJS } from '../node_modules/chart.js/dist/chart.js'
+
+   // For tailwind utilities
+   import { twMerge } from '../node_modules/tailwind-merge/dist/index.js'
+   ```
+
 8. Clear your browser cache or try opening the site in an incognito/private window.
 
 ## GitHub Repository Setup
