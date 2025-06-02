@@ -1,10 +1,10 @@
-import React from '../../node_modules/react/index.js';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Button } from './ui/button';
-import { Droplets } from '../../node_modules/lucide-react/dist/esm/index.js';
-import { Pie } from '../../node_modules/react-chartjs-2/dist/index.js';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from '../../node_modules/chart.js/dist/chart.js';
+import { Droplets } from 'lucide-react';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
