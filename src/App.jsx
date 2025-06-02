@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from '../node_modules/react/index.js'
 import './App.css'
 import BarcodeScanner from './components/BarcodeScanner'
 import NutritionDisplay from './components/NutritionDisplay'
@@ -15,7 +15,7 @@ import useDeviceDetect from './hooks/useDeviceDetect'
 import { Button } from './components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from './components/ui/card'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs'
-import { ScanLine, Search, Home, Droplets } from 'lucide-react'
+import { ScanLine, Search, Home, Droplets } from '../node_modules/lucide-react/dist/esm/index.js'
 
 function App() {
   const [foods, setFoods] = useState([])

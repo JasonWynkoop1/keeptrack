@@ -62,8 +62,8 @@ If you encounter issues after deployment, check the following:
    a. Create a JavaScript version of your entry point that doesn't use JSX syntax:
    ```javascript
    // src/main.js
-   import React, { StrictMode } from 'react'
-   import { createRoot } from 'react-dom/client'
+   import React, { StrictMode } from '../node_modules/react/index.js'
+   import { createRoot } from '../node_modules/react-dom/client.js'
    import './index.css'
    import App from './App.jsx'
 
