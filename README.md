@@ -60,12 +60,37 @@ If you encounter a white screen or 404 errors after deployment, check the follow
    <script type="module" src="./src/main.js"></script>
    ```
 
-4. After making changes, redeploy by running:
+4. If you encounter a build error like "Failed to resolve ./src/main.js", ensure that the file referenced in your HTML actually exists. You may need to:
+   - Create a new file with the correct extension (e.g., create `main.js` if you only have `main.jsx`)
+   - Or change the reference in `index.html` to match your actual file name
+
+5. If you see an error like "Failed to parse source for import analysis because the content contains invalid JS syntax", it means you're using JSX syntax in a .js file. You have two options:
+   - Rename the file to have a .jsx extension and update references to it
+   - Or convert the JSX syntax to use React.createElement() instead:
+   ```javascript
+   // Instead of this JSX syntax:
+   createRoot(document.getElementById('root')).render(
+     <StrictMode>
+       <App />
+     </StrictMode>
+   )
+
+   // Use this JavaScript syntax:
+   createRoot(document.getElementById('root')).render(
+     React.createElement(
+       StrictMode,
+       null,
+       React.createElement(App, null)
+     )
+   )
+   ```
+
+6. After making changes, redeploy by running:
    ```bash
    npm run deploy
    ```
 
-5. Clear your browser cache or try opening the site in an incognito/private window.
+7. Clear your browser cache or try opening the site in an incognito/private window.
 
 ## GitHub Repository Setup
 
