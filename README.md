@@ -176,7 +176,24 @@ If you encounter a white screen or 404 errors after deployment, check the follow
 
    This approach avoids MIME type issues by not using ES modules at all.
 
-8. Clear your browser cache or try opening the site in an incognito/private window.
+8. If you're still experiencing MIME type errors after trying the above solutions, try using absolute URLs for your resources:
+   ```html
+   <!-- Change this: -->
+   <link rel="stylesheet" href="./src/index.css" />
+   <script src="./src/App.js"></script>
+   <script src="./src/main.js"></script>
+
+   <!-- To this: -->
+   <link rel="stylesheet" href="https://YOUR_GITHUB_USERNAME.github.io/keeptrack/src/index.css" />
+   <script src="https://YOUR_GITHUB_USERNAME.github.io/keeptrack/src/App.js"></script>
+   <script src="https://YOUR_GITHUB_USERNAME.github.io/keeptrack/src/main.js"></script>
+   ```
+
+   This ensures that the browser loads the resources from the correct location, regardless of the current URL.
+
+9. If you have both .js and .jsx versions of the same file (e.g., App.js and App.jsx), it might cause conflicts. Consider removing or renaming the files you're not using.
+
+10. Clear your browser cache or try opening the site in an incognito/private window.
 
 ## GitHub Repository Setup
 
