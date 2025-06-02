@@ -90,7 +90,9 @@ If you encounter a white screen or 404 errors after deployment, check the follow
    npm run deploy
    ```
 
-7. If you see an error like "Failed to resolve module specifier 'react'. Relative references must start with either '/', './', or '../'", you need to update your import statements to use relative paths:
+7. If you see an error like "Failed to resolve module specifier 'react'. Relative references must start with either '/', './', or '../'", you have two options:
+
+   **Option 1: Use relative paths for imports**
    ```javascript
    // Change this:
    import React, { StrictMode } from 'react'
@@ -121,6 +123,58 @@ If you encounter a white screen or 404 errors after deployment, check the follow
    // For tailwind utilities
    import { twMerge } from '../node_modules/tailwind-merge/dist/index.js'
    ```
+
+   **Option 2: Use CDN for React and avoid ES modules (recommended for GitHub Pages)**
+
+   If you're still experiencing MIME type errors like:
+   - "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of 'text/css'"
+   - "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of 'text/jsx'"
+
+   You can switch to using CDN for React and regular scripts instead of ES modules:
+
+   1. Update index.html to load React from CDN and include your CSS directly:
+   ```html
+   <head>
+     <!-- Other head elements -->
+     <link rel="stylesheet" href="./src/index.css" />
+     <!-- Load React and ReactDOM from CDN -->
+     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+   </head>
+   <body>
+     <div id="root"></div>
+     <!-- Load your scripts as regular scripts, not modules -->
+     <script src="./src/App.js"></script>
+     <script src="./src/main.js"></script>
+   </body>
+   ```
+
+   2. Create a simplified App.js that uses global variables:
+   ```javascript
+   // Create a simple App component
+   window.App = function() {
+     return React.createElement(
+       'div',
+       { className: 'app-container' },
+       React.createElement('h1', null, 'Your App Title')
+     );
+   };
+   ```
+
+   3. Update main.js to use regular script syntax:
+   ```javascript
+   document.addEventListener('DOMContentLoaded', function() {
+     ReactDOM.createRoot(document.getElementById('root')).render(
+       React.createElement(
+         React.StrictMode,
+         null,
+         React.createElement(App, null)
+       )
+     );
+   });
+   ```
+
+   This approach avoids MIME type issues by not using ES modules at all.
 
 8. Clear your browser cache or try opening the site in an incognito/private window.
 
