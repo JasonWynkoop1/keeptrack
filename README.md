@@ -17,7 +17,7 @@ To deploy the full-featured app to GitHub Pages (not the simplified test version
 
 1. Make sure your `index.html` file is using the correct module import for the main entry point:
    ```html
-   <script type="module" src="./src/main.jsx"></script>
+   <script type="module" src="./src/main.js"></script>
    ```
 
 2. Ensure your `package.json` has the correct homepage field with your GitHub username:
@@ -54,10 +54,32 @@ If you encounter issues after deployment, check the following:
 2. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
    ```html
    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
-   <script type="module" src="./src/main.jsx"></script>
+   <script type="module" src="./src/main.js"></script>
    ```
 
-3. If you see MIME type errors, make sure your server is configured to serve .jsx files with the correct MIME type. For GitHub Pages, it's recommended to use the standard Vite build process which will bundle and transpile your JSX files into regular JavaScript.
+3. If you see a MIME type error like "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of 'text/jsx'", this is because GitHub Pages serves .jsx files with the wrong MIME type. To fix this:
+
+   a. Create a JavaScript version of your entry point that doesn't use JSX syntax:
+   ```javascript
+   // src/main.js
+   import React, { StrictMode } from 'react'
+   import { createRoot } from 'react-dom/client'
+   import './index.css'
+   import App from './App.jsx'
+
+   createRoot(document.getElementById('root')).render(
+     React.createElement(
+       StrictMode,
+       null,
+       React.createElement(App, null)
+     )
+   )
+   ```
+
+   b. Update your index.html to reference this .js file instead of the .jsx file:
+   ```html
+   <script type="module" src="./src/main.js"></script>
+   ```
 
 4. After making changes, redeploy by running:
    ```bash
