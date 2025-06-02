@@ -36,6 +36,28 @@ This project is configured for deployment to GitHub Pages. Before deploying, mak
 
 Your application will be available at the URL specified in the `homepage` field of your `package.json`.
 
+## Troubleshooting Deployment Issues
+
+If you encounter a white screen or 404 errors after deployment, check the following:
+
+1. Ensure your `homepage` in `package.json` has your correct GitHub username:
+   ```json
+   "homepage": "https://YOUR_ACTUAL_USERNAME.github.io/keeptrack"
+   ```
+
+2. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
+   ```html
+   <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+   <script type="module" src="./src/main.jsx"></script>
+   ```
+
+3. After making changes, redeploy by running:
+   ```bash
+   npm run deploy
+   ```
+
+4. Clear your browser cache or try opening the site in an incognito/private window.
+
 ## GitHub Repository Setup
 
 If you haven't pushed this project to GitHub yet:
