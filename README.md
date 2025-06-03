@@ -17,17 +17,17 @@ To deploy the full-featured app to GitHub Pages, follow these steps:
 
 1. Make sure your `index.html` file is using the correct module import for the main entry point:
    ```html
-   <script type="module" src="./src/main.jsx"></script>
+   <script type="module" src="./src/main.js"></script>
    ```
 
 2. Ensure your `package.json` has the correct homepage field with your GitHub username:
    ```json
-   "homepage": "https://YOUR_GITHUB_USERNAME.github.io/keeptrack"
+   "homepage": "https://YOUR_GITHUB_USERNAME.github.io"
    ```
 
-3. Verify that the `base` path in `vite.config.js` matches your repository name:
+3. Verify that the `base` path in `vite.config.js` is set to the root path:
    ```javascript
-   base: '/keeptrack/', // Replace with your repository name if different
+   base: '/', // Deploying to root path
    ```
 
 4. Run the build and deploy commands:
@@ -54,7 +54,7 @@ If you encounter issues after deployment, check the following:
 2. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
    ```html
    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
-   <script type="module" src="./src/main.jsx"></script>
+   <script type="module" src="./src/main.js"></script>
    ```
 
 3. If you see MIME type errors like:
@@ -62,20 +62,13 @@ If you encounter issues after deployment, check the following:
    - "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of 'text/jsx'"
    - "Failed to load resource: the server responded with a status of 404 ()" for node_modules
 
-   This is because GitHub Pages serves files with incorrect MIME types and doesn't include node_modules. To fix this, use relative paths for imports in your components:
+   This is because GitHub Pages serves files with incorrect MIME types and doesn't include node_modules. To fix this, you can:
 
+   a. Create a JavaScript version of your entry point that doesn't use JSX syntax:
    ```javascript
-   // In your components, use relative paths to node_modules
-   import React from '../node_modules/react/index.js'
-   import { createRoot } from '../node_modules/react-dom/client.js'
-   ```
-
-   For the main.jsx file, you may need to convert JSX syntax to React.createElement calls:
-
-   ```javascript
-   // src/main.jsx
-   import React, { StrictMode } from '../node_modules/react/index.js'
-   import { createRoot } from '../node_modules/react-dom/client.js'
+   // src/main.js
+   import React, { StrictMode } from 'react'
+   import { createRoot } from 'react-dom/client'
    import './index.css'
    import App from './App.jsx'
 
@@ -86,6 +79,18 @@ If you encounter issues after deployment, check the following:
        React.createElement(App, null)
      )
    )
+   ```
+
+   b. Update your index.html to reference this .js file instead of the .jsx file:
+   ```html
+   <script type="module" src="./src/main.js"></script>
+   ```
+
+   c. If you're still having issues with module imports, you can use relative paths for imports in your components:
+   ```javascript
+   // In your components, use relative paths to node_modules
+   import React from '../node_modules/react/index.js'
+   import { createRoot } from '../node_modules/react-dom/client.js'
    ```
 
 4. After making changes, redeploy by running:

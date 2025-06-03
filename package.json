@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://jasonwynkoop1.github.io/keeptrack",
+  "homepage": "https://jasonwynkoop1.github.io",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
