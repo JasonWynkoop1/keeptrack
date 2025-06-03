@@ -25,6 +25,14 @@ To deploy the full-featured app to GitHub Pages, follow these steps:
    base: '/keeptrack/', // Deploying to GitHub Pages subdirectory
    ```
 
+   Note: The vite.config.js has been updated to increase the chunk size warning limit to 1000 kB:
+   ```javascript
+   build: {
+     chunkSizeWarningLimit: 1000, // Increase the size limit to 1000 kB (1 MB)
+   }
+   ```
+   This addresses the warning about chunks being larger than 500 kB after minification.
+
 3. Make sure you have a `.nojekyll` file in your repository root to prevent GitHub Pages from processing your files with Jekyll:
    ```bash
    touch .nojekyll
@@ -40,6 +48,14 @@ To deploy the full-featured app to GitHub Pages, follow these steps:
    npm run build
    npm run deploy
    ```
+
+   If you encounter an error like "A branch named 'gh-pages' already exists", you can run the clean command first:
+   ```bash
+   npm run clean
+   npm run deploy
+   ```
+
+   Note: The deployment script has been updated to automatically run the clean step before deployment.
 
 6. After deployment, go to your repository settings on GitHub:
    - Navigate to "Settings" > "Pages"
@@ -161,6 +177,8 @@ If you encounter issues after deployment, check the following:
    import { useState, useEffect } from 'react'
    ```
 
+8. If you encounter authentication errors during deployment, such as "Support for password authentication was removed", see the [GitHub Authentication](#github-authentication) section below for instructions on setting up personal access tokens or SSH keys.
+
 ## GitHub Repository Setup
 
 If you haven't pushed this project to GitHub yet:
@@ -172,6 +190,58 @@ If you haven't pushed this project to GitHub yet:
    git branch -M main
    git push -u origin main
    ```
+
+## GitHub Authentication
+
+As of August 13, 2021, GitHub no longer supports password authentication for Git operations. If you encounter an authentication error like this:
+
+```
+remote: Support for password authentication was removed on August 13, 2021.
+remote: Please see https://docs.github.com/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
+fatal: Authentication failed
+```
+
+You need to use one of the following authentication methods:
+
+### Option 1: Personal Access Token (PAT)
+
+1. Create a Personal Access Token on GitHub:
+   - Go to GitHub Settings > Developer settings > Personal access tokens > Tokens (classic)
+   - Click "Generate new token" and select "Classic"
+   - Give it a name, set an expiration, and select the necessary scopes (at minimum, select "repo")
+   - Click "Generate token" and copy the token (you won't be able to see it again)
+
+2. Use the token as your password when prompted during git operations:
+   - Username: your GitHub username
+   - Password: your personal access token
+
+3. To avoid being prompted each time, you can store your credentials:
+   ```bash
+   git config --global credential.helper store
+   ```
+   Then perform a Git operation that requires authentication. Your credentials will be stored for future use.
+
+### Option 2: SSH Authentication
+
+1. Generate an SSH key pair if you don't have one:
+   ```bash
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   ```
+
+2. Add the SSH key to your GitHub account:
+   - Copy your public key to clipboard:
+     ```bash
+     cat ~/.ssh/id_ed25519.pub | pbcopy
+     ```
+   - Go to GitHub Settings > SSH and GPG keys > New SSH key
+   - Paste your key and give it a title
+
+3. Update your repository to use SSH instead of HTTPS:
+   ```bash
+   git remote set-url origin git@github.com:YOUR_GITHUB_USERNAME/keeptrack.git
+   ```
+
+For more information, see [GitHub's documentation on authentication](https://docs.github.com/en/authentication).
 
 ## Technologies Used
 
