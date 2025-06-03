@@ -49,13 +49,33 @@ To deploy the full-featured app to GitHub Pages, follow these steps:
    ```bash
    ./test-deploy.sh
    ```
-   This will build your app and start a local server at http://localhost:8080
+   This will build your app, create the necessary directory structure to match the base path, and start a local server at http://localhost:8082. The script creates a `/keeptrack/` directory inside the `dist` directory and copies the assets there to match the paths expected by the built files.
 
 Your full-featured application will be available at the URL specified in the `homepage` field of your `package.json`.
 
 ## Troubleshooting Deployment Issues
 
 If you encounter issues after deployment, check the following:
+
+0. Make sure your index.html file is a proper application entry point and not a redirect page:
+   - The index.html file should contain a div with id "root" for React to render into
+   - It should include a script tag that imports the main.js file
+   - It should NOT contain a meta refresh tag or redirect to dist/index.html
+   ```html
+   <!doctype html>
+   <html lang="en">
+     <head>
+       <meta charset="UTF-8" />
+       <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       <title>Calorie Tracker</title>
+     </head>
+     <body>
+       <div id="root"></div>
+       <script type="module" src="./src/main.js"></script>
+     </body>
+   </html>
+   ```
 
 1. Ensure your `homepage` in `package.json` has your correct GitHub username and includes the trailing slash:
    ```json
@@ -73,7 +93,16 @@ If you encounter issues after deployment, check the following:
    <script type="module" src="./src/main.js"></script>
    ```
 
-3. If you see MIME type errors like:
+4. If you see 404 errors for assets with paths like `/keeptrack/assets/index-XXX.js` when testing locally, this is because the built files are expecting to be served from a base path of `/keeptrack/` but your local server is serving from the root. You can:
+   - Use the updated `test-deploy.sh` script which creates the necessary directory structure
+   - Or manually create a `/keeptrack/` directory inside your `dist` directory and copy the assets there:
+     ```bash
+     mkdir -p dist/keeptrack
+     cp -r dist/assets dist/keeptrack/
+     cp dist/vite.svg dist/keeptrack/
+     ```
+
+5. If you see MIME type errors like:
    - "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of 'text/css'"
    - "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of 'text/jsx'"
    - "Failed to load resource: the server responded with a status of 404 ()" for node_modules
