@@ -15,30 +15,41 @@ This project uses Vite for fast development and building. Here are the available
 
 To deploy the full-featured app to GitHub Pages, follow these steps:
 
-1. Make sure your `index.html` file is using the correct module import for the main entry point:
-   ```html
-   <script type="module" src="./src/main.js"></script>
-   ```
-
-2. Ensure your `package.json` has the correct homepage field with your GitHub username:
+1. Ensure your `package.json` has the correct homepage field with your GitHub username and repository name:
    ```json
-   "homepage": "https://YOUR_GITHUB_USERNAME.github.io"
+   "homepage": "https://YOUR_GITHUB_USERNAME.github.io/keeptrack/"
    ```
 
-3. Verify that the `base` path in `vite.config.js` is set to the root path:
+2. Verify that the `base` path in `vite.config.js` is set to the repository name:
    ```javascript
-   base: '/', // Deploying to root path
+   base: '/keeptrack/', // Deploying to GitHub Pages subdirectory
    ```
 
-4. Run the build and deploy commands:
+3. Make sure you have a `.nojekyll` file in your repository root to prevent GitHub Pages from processing your files with Jekyll:
+   ```bash
+   touch .nojekyll
+   ```
+
+4. Update your build script in `package.json` to copy the `.nojekyll` file to the dist directory:
+   ```json
+   "build": "vite build && cp .nojekyll dist/"
+   ```
+
+5. Run the build and deploy commands:
    ```bash
    npm run build
    npm run deploy
    ```
 
-5. After deployment, go to your repository settings on GitHub:
+6. After deployment, go to your repository settings on GitHub:
    - Navigate to "Settings" > "Pages"
    - Ensure the "Source" is set to "gh-pages" branch
+
+7. To test your deployment locally before pushing to GitHub, you can use the included script:
+   ```bash
+   ./test-deploy.sh
+   ```
+   This will build your app and start a local server at http://localhost:8080
 
 Your full-featured application will be available at the URL specified in the `homepage` field of your `package.json`.
 
@@ -46,12 +57,17 @@ Your full-featured application will be available at the URL specified in the `ho
 
 If you encounter issues after deployment, check the following:
 
-1. Ensure your `homepage` in `package.json` has your correct GitHub username:
+1. Ensure your `homepage` in `package.json` has your correct GitHub username and includes the trailing slash:
    ```json
-   "homepage": "https://YOUR_ACTUAL_USERNAME.github.io/keeptrack"
+   "homepage": "https://YOUR_ACTUAL_USERNAME.github.io/keeptrack/"
    ```
 
-2. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
+2. If you see the error "Failed to resolve module specifier 'react'. Relative references must start with either '/', './', or '../'", this means the browser is trying to load the source files directly instead of the bundled files. Make sure:
+   - You have deployed the built files correctly using `npm run deploy`
+   - The `.nojekyll` file exists in both your repository root and the dist directory
+   - Your `vite.config.js` has the correct base path: `base: '/keeptrack/'`
+
+3. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
    ```html
    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
    <script type="module" src="./src/main.js"></script>
