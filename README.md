@@ -101,7 +101,15 @@ If you encounter issues after deployment, check the following:
 2. If you see the error "Failed to resolve module specifier 'react'. Relative references must start with either '/', './', or '../'", this means the browser is trying to load the source files directly instead of the bundled files. Make sure:
    - You have deployed the built files correctly using `npm run deploy`
    - The `.nojekyll` file exists in both your repository root and the dist directory
-   - Your `vite.config.js` has the correct base path: `base: '/keeptrack/'`
+   - Your `vite.config.js` has the correct base path: `base: './'` (using relative paths instead of absolute paths)
+   - Your import statements in main.js use relative paths to node_modules:
+     ```javascript
+     // Change this:
+     import React from 'react'
+
+     // To this:
+     import React from '../node_modules/react/index.js'
+     ```
 
 3. Make sure paths in `index.html` are using relative paths (starting with `./`) instead of absolute paths (starting with `/`):
    ```html
