@@ -1,4 +1,4 @@
-import * as React from "../../../node_modules/react/index.js"
+import * as React from "react"
 import { cn } from "../../lib/utils"
 
 const Card = React.forwardRef(({ className, ...props }, ref) => (

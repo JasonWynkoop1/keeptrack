@@ -1,6 +1,6 @@
-import * as React from "../../../node_modules/react/index.js"
-import { Slot } from "../../../node_modules/@radix-ui/react-slot/dist/index.js"
-import { cva } from "../../../node_modules/class-variance-authority/dist/index.js"
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 
 const buttonVariants = cva(
