@@ -5,7 +5,7 @@ import { resolve } from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative paths instead of absolute paths
+  base: '/keeptrack/', // Deploying to GitHub Pages subdirectory
   build: {
     chunkSizeWarningLimit: 1000, // Increase the size limit to 1000 kB (1 MB)
     rollupOptions: {

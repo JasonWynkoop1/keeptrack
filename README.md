@@ -20,18 +20,26 @@ To deploy the full-featured app to GitHub Pages, follow these steps:
    "homepage": "https://YOUR_GITHUB_USERNAME.github.io/keeptrack/"
    ```
 
-2. Verify that the `base` path in `vite.config.js` is set to the repository name:
+2. Verify that the `base` path in `vite.config.js` is set to the repository name for GitHub Pages deployment:
    ```javascript
    base: '/keeptrack/', // Deploying to GitHub Pages subdirectory
    ```
 
-   Note: The vite.config.js has been updated to increase the chunk size warning limit to 1000 kB:
+   Note: The vite.config.js has been updated with the following configurations:
    ```javascript
    build: {
      chunkSizeWarningLimit: 1000, // Increase the size limit to 1000 kB (1 MB)
+     rollupOptions: {
+       output: {
+         // Use relative paths for assets
+         assetFileNames: 'assets/[name].[hash].[ext]',
+         chunkFileNames: 'assets/[name].[hash].js',
+         entryFileNames: 'assets/[name].[hash].js',
+       }
+     }
    }
    ```
-   This addresses the warning about chunks being larger than 500 kB after minification.
+   These configurations address the warning about chunks being larger than 500 kB after minification and ensure that assets are correctly referenced with the expected paths.
 
 3. Make sure you have a `.nojekyll` file in your repository root to prevent GitHub Pages from processing your files with Jekyll:
    ```bash
@@ -101,8 +109,9 @@ If you encounter issues after deployment, check the following:
 2. If you see the error "Failed to resolve module specifier 'react'. Relative references must start with either '/', './', or '../'", this means the browser is trying to load the source files directly instead of the bundled files. Make sure:
    - You have deployed the built files correctly using `npm run deploy`
    - The `.nojekyll` file exists in both your repository root and the dist directory
-   - Your `vite.config.js` has the correct base path: `base: './'` (using relative paths instead of absolute paths)
-   - Your import statements in main.js use relative paths to node_modules:
+   - Your `vite.config.js` has the correct base path: `base: '/keeptrack/'` for GitHub Pages deployment
+   - If you're still seeing the error, check if GitHub Pages is serving the source index.html file from the project root instead of the dist/index.html file. Make sure your deployment process is correctly configured to deploy the dist directory to the gh-pages branch.
+   - As a last resort, you can modify your import statements in main.js to use relative paths to node_modules:
      ```javascript
      // Change this:
      import React from 'react'
