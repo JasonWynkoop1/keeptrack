@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Deploying to root path
+  base: '/keeptrack/', // Deploying to GitHub Pages subdirectory
 })
