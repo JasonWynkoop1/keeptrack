@@ -111,6 +111,15 @@ If you encounter issues after deployment, check the following:
    - The `.nojekyll` file exists in both your repository root and the dist directory
    - Your `vite.config.js` has the correct base path: `base: '/keeptrack/'` for GitHub Pages deployment
    - If you're still seeing the error, check if GitHub Pages is serving the source index.html file from the project root instead of the dist/index.html file. Make sure your deployment process is correctly configured to deploy the dist directory to the gh-pages branch.
+   - If GitHub Pages is serving the source index.html file, you can update it to reference the bundled files directly:
+     ```html
+     <!-- Change this: -->
+     <script type="module" src="./src/main.js"></script>
+
+     <!-- To this: -->
+     <script type="module" src="./dist/assets/index.[hash].js"></script>
+     ```
+     Replace `[hash]` with the actual hash generated during the build process.
    - As a last resort, you can modify your import statements in main.js to use relative paths to node_modules:
      ```javascript
      // Change this:
